@@ -3,6 +3,7 @@
 namespace Tafhyseni\TwilioSimple;
 
 use Twilio\Rest\Client;
+use Twilio\TwiML\VoiceResponse;
 use Exception;
 
 class RequestTwilio
@@ -38,6 +39,11 @@ class RequestTwilio
 	 * The home of Exceptions!
 	 */
 	public $error;
+
+	/**
+	 * Text when making outbound calls from Twilio
+	 */
+	protected $CALL_TEXT;
 
 	/**
 	 * Twilio object
@@ -78,6 +84,14 @@ class RequestTwilio
     }
 
     /**
+     * CALL TEXT for outbound calls
+     */
+    public function setText($text)
+    {
+    	$this->CALL_TEXT = $this->_generate_text_to_say($text);
+    }
+
+    /**
      * Exceptions saver
      * @return  string $error Saves Exception message
      */
@@ -106,6 +120,7 @@ class RequestTwilio
 
     /**
      * Sends the SMS request to Twilio API
+     * @param string $send_to_number Send the receiving number
      * @return bool
      */
     public function sendSMS(
@@ -127,11 +142,45 @@ class RequestTwilio
 			        'body' => $this->message
 			    )
 			);
-
+			return true;
 		} catch (Exception $e) {
 			$this->error = $e->getMessage();
 			return false;
 		}
+    }
+
+    /**
+     * Makes call and reads the Call Text
+     * @param string $call_number Number that should be called
+     * @return bool
+     */
+    public function makeCall($call_number)
+    {
+    	if($this->_connectToTwilio())
+    	{
+    		$this->error = 'Failed to connect to Twilio';
+    		return false;
+    	}
+
+    	if(!$this->CALL_TEXT)
+    	{
+    		$this->error = 'Call text was not set properly!';
+    		return false;
+    	}
+
+    	try {
+	    	$call = $this->twilio->calls->create(
+	    		$this->_getTwilioNumber($call_number),
+	    		$this->_getTwilioNumber(),
+	    		array(
+	    			'twiml' => $this->CALL_TEXT
+	    		)
+	    	);
+    		return true;
+    	} catch (Exception $e) {
+    		$this->error = $e->getMessage();
+			return false;
+    	}
     }
 
     /**
@@ -152,5 +201,12 @@ class RequestTwilio
     private function _clear_error()
     {
     	$this->error = '';
+    }
+
+    private function _generate_text_to_say($text)
+    {
+    	$call_text = new VoiceResponse();
+    	$call_text->say($text);
+    	return $call_text;
     }
 }
