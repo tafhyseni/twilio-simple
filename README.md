@@ -18,7 +18,7 @@ composer require tafhyseni/twilio-simple
 ## Usage
 
 ``` php
-// Usage description here
+use Tafhyseni\TwilioSimple\RequestTwilio;
 ```
 
 ### Testing
