@@ -2,7 +2,7 @@
 
 namespace Tafhyseni\TwilioSimple;
 
-use GuzzleHttp\Client;
+use Twilio\Rest\Client;
 use Exception;
 
 class RequestTwilio
@@ -34,7 +34,7 @@ class RequestTwilio
 	 */
 	public $message;
 
-	protected $twilio;
+	public $twilio;
 
     public function __construct($sid = NULL, $token = NULL, $phone = NULL)
     {
@@ -98,8 +98,7 @@ class RequestTwilio
      */
     public function connectToTwilio()
     {
-    	$client = new \GuzzleHttp\Client();
-		// $this->twilio = new Client($this->sid, $this->token);
-		// return $this->twilio;
+		$this->twilio = new Client($this->sid, $this->token);
+		return $this->twilio;
     }
 }
