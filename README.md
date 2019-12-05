@@ -19,6 +19,22 @@ composer require tafhyseni/twilio-simple
 
 ``` php
 use Tafhyseni\TwilioSimple\RequestTwilio;
+
+$twilio = new RequestTwilio(
+    'YOUR_twilio_SID',
+    'YOUR_twilio_TOKEN',
+    'YOUR_twilio_verified_number'
+);
+
+$twilio->setSMS('This is my SMS message body');
+if(!$twilio->sendSMS('+38344738020'))
+{
+    // An error happened. 
+    echo $twilio->getError(); // getError() will return the error message!
+}else{
+    // message sent/queued
+    echo $twilio->countSMS(); // countSMS() will return the number of sms sent.
+}
 ```
 
 ### Testing
