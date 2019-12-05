@@ -1,11 +1,11 @@
-# Very short description of the package
+# SMS and Phone Calls by Twilio made easy
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/tafhyseni/twilio-simple.svg?style=flat-square)](https://packagist.org/packages/tafhyseni/twilio-simple)
 [![Build Status](https://img.shields.io/travis/tafhyseni/twilio-simple/master.svg?style=flat-square)](https://travis-ci.org/tafhyseni/twilio-simple)
 [![Quality Score](https://img.shields.io/scrutinizer/g/tafhyseni/twilio-simple.svg?style=flat-square)](https://scrutinizer-ci.com/g/tafhyseni/twilio-simple)
 [![Total Downloads](https://img.shields.io/packagist/dt/tafhyseni/twilio-simple.svg?style=flat-square)](https://packagist.org/packages/tafhyseni/twilio-simple)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+This is a helper package to help you using Twilio. Sending SMS and making Phone Calls has never been easier!
 
 ## Installation
 
