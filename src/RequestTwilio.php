@@ -98,7 +98,7 @@ class RequestTwilio
      */
     public function connectToTwilio()
     {
-		$this->twilio = new Client($this->sid, $this->token);
+		$this->twilio = new Client($this->SID, $this->TOKEN);
 		return $this->twilio;
     }
 }
