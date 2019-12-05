@@ -1,0 +1,43 @@
+{
+    "name": "tafhyseni/twilio-simple",
+    "description": "SMS and Phone Calls by Twilio made easy!",
+    "keywords": [
+        "tafhyseni",
+        "twilio-simple"
+    ],
+    "homepage": "https://github.com/tafhyseni/twilio-simple",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Mustafe Hyseni",
+            "email": "tafhyseni@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "twilio/sdk": "^5.39"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tafhyseni\\TwilioSimple\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tafhyseni\\TwilioSimple\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
