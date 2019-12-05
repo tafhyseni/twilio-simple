@@ -27,7 +27,7 @@ $twilio = new RequestTwilio(
 );
 
 $twilio->setSMS('This is my SMS message body');
-if(!$twilio->sendSMS('+38344738020'))
+if(!$twilio->sendSMS('PHONE_NUMBER_HERE'))
 {
     // An error happened. 
     echo $twilio->getError(); // getError() will return the error message!
