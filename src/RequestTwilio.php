@@ -21,7 +21,7 @@ class RequestTwilio
 	/**
 	 * @var string A Valid Twilio phone number
 	 */
-	protected $phone_number;
+	protected $PHONE;
 
 	/**
 	 * @var int SMS LIMIT (before split). It's already a defined constant by Twilio!
@@ -34,9 +34,21 @@ class RequestTwilio
 	 */
 	public $message;
 
-	public $twilio;
+	/**
+	 * The home of Exceptions!
+	 */
+	public $error;
 
-    public function __construct($sid = NULL, $token = NULL, $phone = NULL)
+	/**
+	 * Twilio object
+	 */
+	protected $twilio;
+
+    public function __construct(
+    	$sid = NULL, 
+    	$token = NULL, 
+    	$phone = NULL
+    )
     {
     	if(!isset($sid) || !isset($token))
     	{
@@ -66,6 +78,15 @@ class RequestTwilio
     }
 
     /**
+     * Exceptions saver
+     * @return  string $error Saves Exception message
+     */
+    public function getError()
+    {
+    	return $this->error;
+    }
+
+    /**
      * Preview the SMS message body
      * @return string message preview
      */
@@ -85,20 +106,51 @@ class RequestTwilio
 
     /**
      * Sends the SMS request to Twilio API
-     * @return array Returns array will response code and message
+     * @return bool
      */
-    public function sendSMS($phone_number)
+    public function sendSMS(
+    	$send_to_number
+    )
     {
-    	// Send SMS
+    	if($this->_connectToTwilio())
+    	{
+    		$this->error = 'Failed to connect to Twilio';
+    		return false;
+    	}
+		try {
+			$this->_clear_error();
+
+			$send = $this->twilio->messages->create(
+			    $this->_getTwilioNumber($send_to_number),
+			    array(
+			        'from' => $this->_getTwilioNumber(),
+			        'body' => $this->message
+			    )
+			);
+
+		} catch (Exception $e) {
+			$this->error = $e->getMessage();
+			return false;
+		}
     }
 
     /**
      * Connection will be done only on several functions
      * @return bool
      */
-    public function connectToTwilio()
+    private function _connectToTwilio()
     {
 		$this->twilio = new Client($this->SID, $this->TOKEN);
-		return $this->twilio;
+    }
+
+    private function _getTwilioNumber($phone = null)
+    {
+    	$phone = $phone ?: $this->PHONE;
+    	return substr($phone, 0, 1) == '+' ? $phone : '+' . $phone;
+    }
+
+    private function _clear_error()
+    {
+    	$this->error = '';
     }
 }
