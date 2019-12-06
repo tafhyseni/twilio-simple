@@ -169,6 +169,8 @@ class RequestTwilio
     	}
 
     	try {
+    		$this->_clear_error();
+
 	    	$call = $this->twilio->calls->create(
 	    		$this->_getTwilioNumber($call_number),
 	    		$this->_getTwilioNumber(),
@@ -192,9 +194,14 @@ class RequestTwilio
 		$this->twilio = new Client($this->SID, $this->TOKEN);
     }
 
+    /**
+     * Prepares number if not in correct format
+     * @param  [type] $phone [description]
+     * @return [type]        [description]
+     */
     private function _getTwilioNumber($phone = null)
     {
-    	$phone = $phone ?: $this->PHONE;
+    	$phone = preg_replace('/\s+/', '', $phone) ?: preg_replace('/\s+/', '', $this->PHONE);
     	return substr($phone, 0, 1) == '+' ? $phone : '+' . $phone;
     }
 
@@ -203,6 +210,11 @@ class RequestTwilio
     	$this->error = '';
     }
 
+    /**
+     * Creates an object which is used as Calling Text from string
+     * @param  string $text "What to say when call occurs?"
+     * @return object
+     */
     private function _generate_text_to_say($text)
     {
     	$call_text = new VoiceResponse();
