@@ -16,7 +16,7 @@ composer require tafhyseni/twilio-simple
 ```
 
 ## Usage
-
+Send a SMS to a specified phone number
 ``` php
 use Tafhyseni\TwilioSimple\RequestTwilio;
 
@@ -34,6 +34,24 @@ if(!$twilio->sendSMS('PHONE_NUMBER_HERE'))
 }else{
     // message sent/queued
     echo $twilio->countSMS(); // countSMS() will return the number of sms sent.
+}
+```
+Make a call to a phone number and say something
+``` php
+use Tafhyseni\TwilioSimple\RequestTwilio;
+
+$twilio = new RequestTwilio(
+    'YOUR_twilio_SID',
+    'YOUR_twilio_TOKEN',
+    'YOUR_twilio_verified_number'
+);
+
+$twilio->setSMS('Hello, this call is made from Twilio Simple Package!');
+if(!$twilio->makeCall('PHONE_NUMBER_HERE'))
+{
+    $data['error'] = 'Error:' . $twilio->getError();
+}else{
+    $data['error'] = 'Call Done!';
 }
 ```
 
