@@ -49,9 +49,9 @@ $twilio = new RequestTwilio(
 $twilio->setSMS('Hello, this call is made from Twilio Simple Package!');
 if(!$twilio->makeCall('PHONE_NUMBER_HERE'))
 {
-    $data['error'] = 'Error:' . $twilio->getError();
+    echo 'Error:' . $twilio->getError();
 }else{
-    $data['error'] = 'Call Done!';
+    echo 'Call Done!';
 }
 ```
 
